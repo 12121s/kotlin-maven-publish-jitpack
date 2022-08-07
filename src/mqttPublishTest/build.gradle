@@ -6,13 +6,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdk 32
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 32
-        versionCode 0
-        versionName "1.0"
+        minSdk 21
+        targetSdk 32
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -25,14 +23,6 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions { arguments = ["room.schemaLocation": "$projectDir/schemas".toString()] }
-        }
-
-        configurations.all {
-            resolutionStrategy.eachDependency { details ->
-                if (details.requested.group == 'org.jetbrains.kotlin') {
-                    details.useVersion "1.5.10"
-                }
-            }
         }
     }
 }
@@ -72,19 +62,7 @@ afterEvaluate {
                 from components.release
 
                 // You can then customize attributes of the publication as shown below.
-                groupId = 'com.github.12121s'
-                artifactId = 'mqttPublishTest'
-                version = '0.0.1'
-                artifacts {androidSourcesJar}
-
-                pom.withXml {
-                    configurations.compile.allDependencies.each {
-                        def dependencyNode = dependenciesNode.appendNode('dependency')
-                        dependencyNode.appendNode('groupId', it.group)
-                        dependencyNode.appendNode('artifactId', it.name)
-                        dependencyNode.appendNode('version', it.version)
-                    }
-                }
+                artifact androidSourcesJar
             }
         }
     }
